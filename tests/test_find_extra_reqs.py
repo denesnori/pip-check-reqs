@@ -22,6 +22,7 @@ def fake_opts():
             ignore_files = []
             ignore_mods = []
             ignore_reqs = []
+            requirements_filename = "prod_requirements.txt.txt"
 
         options = options()
         args = ['ham.py']
@@ -65,12 +66,15 @@ def test_find_extra_reqs(monkeypatch, tmp_path: Path):
     monkeypatch.setattr(find_extra_reqs, 'search_packages_info',
                         pretend.call_recorder(lambda x: packages_info))
 
-    fake_requirements_file = tmp_path / 'requirements.txt'
+    fake_requirements_file = tmp_path / 'prod_requirements.txt'
     fake_requirements_file.write_text('foobar==1')
 
     class options:
         def ignore_reqs(x, y):
             return False
+
+        def requirements_filename():
+            return "prod_requirements.txt"
 
     options = options()
 
@@ -97,7 +101,7 @@ def test_main_failure(monkeypatch, caplog, fake_opts):
     assert caplog.records[0].message == \
         'Extra requirements:'
     assert caplog.records[1].message == \
-        'extra in requirements.txt'
+        'extra in prod_requirements.txt.txt'
 
 
 def test_main_no_spec(monkeypatch, caplog, fake_opts):
@@ -131,6 +135,7 @@ def test_logging_config(monkeypatch, caplog, verbose_cfg, debug_cfg, result):
         ignore_files = []
         ignore_mods = []
         ignore_reqs = []
+        requirements_filename = "prod_requirements.txt.txt"
 
     options = options()
 

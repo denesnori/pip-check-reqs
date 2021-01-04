@@ -21,6 +21,7 @@ def fake_opts():
             version = False
             ignore_files = []
             ignore_mods = []
+            requirements_filename = "prod_requirements.txt.txt"
 
         options = options()
         args = ['ham.py']
@@ -142,6 +143,7 @@ def test_logging_config(monkeypatch, caplog, verbose_cfg, debug_cfg, result):
         version = False
         ignore_files = []
         ignore_mods = []
+        requirements_filename = "prod_requirements.txt.txt"
 
     options = options()
 

@@ -113,6 +113,11 @@ def main():
                       action="store_true",
                       default=False,
                       help="display version information")
+    parser.add_option("--requirements_filename",
+                      dest="requirements_filename",
+                      action="store",
+                      default="requirements.txt",
+                      help="Use custom requirements file")
 
     (options, args) = parser.parse_args()
 
@@ -138,10 +143,9 @@ def main():
 
     log.info('using pip_check_reqs-%s from %s', __version__, __file__)
 
-    requirements_filename = 'requirements.txt'
     missing = find_missing_reqs(
         options=options,
-        requirements_filename=requirements_filename,
+        requirements_filename=options.requirements_filename,
     )
 
     if missing:
